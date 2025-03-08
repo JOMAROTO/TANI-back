@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
@@ -23,8 +26,14 @@ public class AutenticacionController {
     }
 
     @PostMapping("/crear-cuenta")
-    public ResponseEntity<String> crearCuenta(@Valid @RequestBody RegistroUsuarioDTO registroUsuarioDTO) throws Exception {
+    public ResponseEntity<Map<String, String>> crearCuenta(@Valid @RequestBody RegistroUsuarioDTO registroUsuarioDTO) throws Exception {
         usuarioServicio.registrarUsuario(registroUsuarioDTO);
-        return ResponseEntity.ok("Cuenta creada exitosamente");
+
+        // Crear una respuesta en formato JSON
+        Map<String, String> response = new HashMap<>();
+        response.put("mensaje", "Cuenta creada exitosamente");
+
+        return ResponseEntity.ok(response);
     }
+
 }

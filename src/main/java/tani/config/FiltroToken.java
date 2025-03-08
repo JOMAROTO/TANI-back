@@ -30,9 +30,11 @@ public class FiltroToken extends OncePerRequestFilter {
             FilterChain filterChain) throws ServletException, IOException {
 
         // Configuración de cabeceras para CORS
-        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200"); // Permitir solo tu frontend
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.addHeader("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization");
+        response.addHeader("Access-Control-Allow-Credentials", "true");
+
 
         if (request.getMethod().equals("OPTIONS")) {
             response.setStatus(HttpServletResponse.SC_OK);

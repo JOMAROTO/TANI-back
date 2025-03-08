@@ -20,6 +20,7 @@ import java.util.List;
 public class Usuario implements Serializable{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Hace que el ID sea autoincrementable
     @EqualsAndHashCode.Include
     private int id_usuario;
 
