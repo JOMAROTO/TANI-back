@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.*;
 
 @Entity
@@ -20,11 +22,14 @@ public class Pedido implements Serializable {
     @EqualsAndHashCode.Include
     private int id_pedido;
 
-    private int id_usuario;
+    @ManyToOne
+    private Usuario usuario;
 
     private LocalDateTime fecha_pedido;
 
     private String estado;
 
+    @OneToOne(mappedBy="pedido")
+    private DetallePedido detallePedido;
 
 }

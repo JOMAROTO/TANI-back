@@ -2,6 +2,8 @@ package tani.model.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.*;
 
 import java.io.Serializable;
@@ -12,15 +14,17 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class DetalleProducto implements Serializable {
+public class DetallePedido implements Serializable {
 
     @Id
     @EqualsAndHashCode.Include
     private int id_detalle;
 
-    private int id_pedido;
+    @OneToOne
+    private Pedido pedido;
 
-    private int id_producto;
+    @ManyToOne
+    private Producto producto;
 
     private int cantidad;
 

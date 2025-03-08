@@ -1,15 +1,15 @@
 package tani.model.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import tani.model.enums.TIPO_USUARIO;
+
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,12 +34,11 @@ public class Usuario implements Serializable{
     private String contraseña;
 
     @Enumerated(EnumType.STRING)
-    private Tipo_Usuario tipo_usuario;
+    private TIPO_USUARIO tipoUsuario;
 
+    @OneToMany(mappedBy="usuario")
+    private List<Pedido> pedidos;
 
 }
 
-enum Tipo_Usuario{
-    USUARIO,
-    ADMINISTRADOR
-}
+

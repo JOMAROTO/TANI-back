@@ -2,6 +2,7 @@ package tani.model.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 import java.io.Serializable;
@@ -19,7 +20,8 @@ public class Notificacion implements Serializable {
     @EqualsAndHashCode.Include
     private int id_notificacion;
 
-    private int id_producto;
+    @ManyToOne
+    private Inventario inventario;
 
     private String mensaje;
 

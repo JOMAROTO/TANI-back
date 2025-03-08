@@ -1,10 +1,11 @@
 package tani.model.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import tani.model.enums.TIPO_CALZADO;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,7 +23,8 @@ public class Producto implements Serializable {
 
     private String nombre;
 
-    private String tipo_calzado;
+    @Enumerated(EnumType.STRING)
+    private TIPO_CALZADO tipoCalzado;
 
     private String descripcion;
 
@@ -34,12 +36,11 @@ public class Producto implements Serializable {
 
     private float precio;
 
-}
+    @OneToOne(mappedBy="producto")
+    private Inventario inventario;
 
-enum TIPO_CALZADO{
-    BOTA,
-    TACON,
-    TENIS,
-    ZAPATO,
-    ZANDALIA
+    @OneToMany(mappedBy="producto")
+    private List<DetallePedido> detallePedidos;
+
+
 }
