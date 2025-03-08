@@ -9,7 +9,6 @@ import tani.dto.usuario.RegistroUsuarioDTO;
 import tani.model.entities.Usuario;
 import tani.repositories.UsuarioRepo;
 import tani.services.interfaces.UsuarioServicio;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tani.services.interfaces.EmailServicio;
