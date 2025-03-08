@@ -53,9 +53,9 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
         // Enviar correo de bienvenida
         EmailDTO email = new EmailDTO(
-                "¡Bienvenido a UniEventos " + usuarioDTO.nombre() + "!",
+                "¡Bienvenido a la plataforma de TANI, " + usuarioDTO.nombre() + "!",
                 "Hola " + usuarioDTO.nombre() + ", ¡Tu información personal fue guardada en nuestra base de datos! " +
-                        "Te damos una cálida bienvenida a UniEventos.",
+                        "Te damos una cálida bienvenida a TANI.",
                 usuarioDTO.correo()
         );
         emailServicio.enviarCorreo(email);
