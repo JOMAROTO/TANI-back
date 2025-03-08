@@ -31,7 +31,7 @@ public class Usuario implements Serializable{
 
     private String correo;
 
-    private String contraseña;
+    private String contrasenia;
 
     @Enumerated(EnumType.STRING)
     private TIPO_USUARIO tipoUsuario;
