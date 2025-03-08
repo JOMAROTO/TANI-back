@@ -30,12 +30,6 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     private final EmailServicio emailServicio;
 
 
-    @Autowired
-    public UsuarioServicioImpl(UsuarioRepo usuarioRepo) {
-        this.usuarioRepo = usuarioRepo;
-    }
-
-
     @Override
     public Usuario registrarUsuario(RegistroUsuarioDTO usuarioDTO) throws Exception {
         // Verificar si el correo ya está registrado
@@ -125,22 +119,9 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     @Override
     public void recuperarPassword(String correo) {
-        Usuario usuario = usuarioRepo.findByCorreo(correo)
-                .orElseThrow(() -> new RuntimeException("Correo no registrado"));
 
-        String tokenRecuperacion = jwtUtil.generarTokenRecuperacion(correo);
-
-        String mensaje = "Hola, " + usuario.getNombre() + ",\n\n" +
-                "Para restablecer tu contraseña, haz clic en el siguiente enlace: \n" + enlace +
-                "\n\nSi no solicitaste esto, ignora este mensaje.";
-
-        emailServicio.enviarCorreo(usuario.getCorreo(), "Recuperación de contraseña", mensaje);
     }
 
-
-    private boolean existeEmail(String correo) {
-        return UsuarioRepo.findByCorreo(correo).isPresent();
-    }
 
 }
 
