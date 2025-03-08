@@ -1,5 +1,7 @@
 package tani.services.interfaces;
 
+import tani.dto.usuario.InformacionUsuarioDTO;
+import tani.dto.usuario.LoginDTO;
 import tani.dto.usuario.RegistroUsuarioDTO;
 import tani.model.entities.Usuario;
 import tani.dto.otros.TokenDTO;
@@ -9,15 +11,18 @@ import java.util.Optional;
 
 public interface UsuarioServicio {
 
-    Usuario registrarUsuario(RegistroUsuarioDTO usuarioDTO) throws Exception;
+    InformacionUsuarioDTO registrarUsuario(RegistroUsuarioDTO usuarioDTO) throws Exception;
 
-    Optional<Usuario> buscarPorCorreo(String correo) throws Exception;
+    Optional<InformacionUsuarioDTO> buscarPorCorreo(String correo) throws Exception;
 
-    TokenDTO iniciarSesion(RegistroUsuarioDTO usuarioDTO);
+    TokenDTO iniciarSesion(LoginDTO usuarioDTO);
 
     boolean existeCorreo(String correo);
 
-    List<Usuario> listarUsuarios();
+    InformacionUsuarioDTO editarUsuario(RegistroUsuarioDTO usuarioDTO) throws Exception;
+
+
+    List<InformacionUsuarioDTO> listarUsuarios();
 
     void eliminarUsuario(Integer id);
 
