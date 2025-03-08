@@ -144,8 +144,42 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     }
 
     @Override
-    public void recuperarPassword(String correo) {
+    public void recuperarPassword(String correo) throws Exception {
 
+        Usuario usuario = usuarioRepo.findByCorreo(correo)
+                .orElseThrow(() -> new RuntimeException("Correo no encontrado"));
+
+        // Convertir entidad a DTO
+        InformacionUsuarioDTO usuarioDTO = new InformacionUsuarioDTO(
+                usuario.getId_usuario(),
+                usuario.getNombre(),
+                usuario.getFechaNacimiento(),
+                usuario.getTelefono(),
+                usuario.getCorreo(),
+                usuario.getTipoUsuario()
+        );
+
+        // Enviar correo de recuperación de contraseña
+        EmailDTO email = new EmailDTO(
+                "¡Recuperacion de contraseña TANI calzados!",
+                "Hola " + usuarioDTO.nombre() + ", ¡Se genero el siguiente link para la recuperacion de la contraseña! " +
+                       "http://localhost:3000/recuperar-contrasenia"+usuarioDTO.correo() ,
+                usuarioDTO.correo()
+        );
+        emailServicio.enviarCorreo(email);
+    }
+
+    @Override
+    public void cambiarContrasenia(String correo, String contrasenia) {
+        // Buscar el usuario por correo
+        Usuario usuario = usuarioRepo.findByCorreo(correo)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Actualizar la contraseña del usuario
+        usuario.setContrasenia(encriptarPassword(contrasenia));
+
+        // Guardar los cambios en la base de datos
+        usuarioRepo.save(usuario);
     }
 
     @Override

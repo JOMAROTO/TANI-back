@@ -26,5 +26,7 @@ public interface UsuarioServicio {
 
     void eliminarUsuario(Integer id);
 
-    void recuperarPassword(String correo);
+    void cambiarContrasenia(String correo, String contrasenia);
+
+    void recuperarPassword(String correo)throws Exception;
 }
