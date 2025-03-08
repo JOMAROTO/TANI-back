@@ -1,8 +1,10 @@
 package tani.controllers;
 
+import org.springframework.http.HttpStatus;
 import tani.dto.usuario.RegistroUsuarioDTO;
 import tani.dto.usuario.LoginDTO;
 import tani.dto.otros.TokenDTO;
+import tani.model.entities.Usuario;
 import tani.services.interfaces.UsuarioServicio;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import jakarta.validation.Valid;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,7 +40,8 @@ public class AutenticacionController {
     }
 
     @PostMapping("/recuperar-contrasenia")
-    public ResponseEntity<Map<String, String>> recuperarContrasenia(@Valid @RequestBody String correo) throws Exception {
+    public ResponseEntity<Map<String, String>> recuperarContrasenia(@Valid @RequestBody Map<String, String> request) throws Exception {
+        String correo = request.get("correo");
         usuarioServicio.recuperarPassword(correo);
 
         // Crear una respuesta en formato JSON
@@ -46,6 +50,8 @@ public class AutenticacionController {
 
         return ResponseEntity.ok(response);
     }
+
+
     @PutMapping("/cambiar-contrasenia/{correo}")
     public ResponseEntity<Map<String, String>> cambiarContrasenia(@PathVariable String correo, @RequestBody String contrasenia) throws Exception {
         usuarioServicio.cambiarContrasenia(correo, contrasenia);
@@ -56,6 +62,8 @@ public class AutenticacionController {
 
         return ResponseEntity.ok(response);
     }
+
+
 
 
 }

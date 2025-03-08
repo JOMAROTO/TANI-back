@@ -145,7 +145,6 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
     @Override
     public void recuperarPassword(String correo) throws Exception {
-
         Usuario usuario = usuarioRepo.findByCorreo(correo)
                 .orElseThrow(() -> new RuntimeException("Correo no encontrado"));
 
@@ -160,10 +159,10 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         );
 
         // Enviar correo de recuperación de contraseña
+        String link = "http://localhost:8080/api/auth/cambiar-contrasenia/" + usuarioDTO.correo();
         EmailDTO email = new EmailDTO(
                 "¡Recuperacion de contraseña TANI calzados!",
-                "Hola " + usuarioDTO.nombre() + ", ¡Se genero el siguiente link para la recuperacion de la contraseña! " +
-                       "http://localhost:3000/recuperar-contrasenia"+usuarioDTO.correo() ,
+                "Hola " + usuarioDTO.nombre() + ", ¡Se genero el siguiente link para la recuperacion de la contraseña! " + link,
                 usuarioDTO.correo()
         );
         emailServicio.enviarCorreo(email);
