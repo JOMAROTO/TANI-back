@@ -29,4 +29,8 @@ public interface UsuarioServicio {
     void cambiarContrasenia(String correo, String contrasenia);
 
     void recuperarPassword(String correo)throws Exception;
+
+    void enviarCorreoRecuperacion(String correo) throws Exception;
+
+    void restablecerContrasenia(String token, String nuevaContrasenia) throws Exception;
 }

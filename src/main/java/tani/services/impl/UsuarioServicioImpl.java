@@ -169,6 +169,57 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     }
 
     @Override
+    public void enviarCorreoRecuperacion(String correo) throws Exception {
+        Usuario usuario = usuarioRepo.findByCorreo(correo)
+                .orElseThrow(() -> new RuntimeException("Correo no encontrado"));
+
+        // Generar un token JWT temporal (ej: válido por 15 minutos)
+        Map<String, Object> claims = Map.of(
+                "tipo", "RECUPERACION_CONTRASENIA"
+        );
+        String token = jwtUtils.generarTokenConExpiracion(correo, claims, 15); // 15 minutos
+
+        // Construir el link que irá en el correo (a la vista del front Angular)
+        String linkRecuperacion = "http://localhost:4200/account/reset-password?token=" + token;
+
+        // Enviar el correo con el link
+        EmailDTO email = new EmailDTO(
+                "Recuperación de contraseña - TANI Calzados",
+                "Hola " + usuario.getNombre() + ",\n\n" +
+                        "Has solicitado recuperar tu contraseña. Por favor haz clic en el siguiente enlace para restablecerla:\n\n" +
+                        linkRecuperacion + "\n\n" +
+                        "Este enlace expirará en 15 minutos.\n\n" +
+                        "Si no solicitaste este cambio, puedes ignorar este mensaje.",
+                correo
+        );
+
+        emailServicio.enviarCorreo(email);
+    }
+
+    @Override
+    public void restablecerContrasenia(String token, String nuevaContrasenia) throws Exception {
+        // Validar y obtener el correo desde el token
+        String correo = jwtUtils.obtenerCorreoDesdeToken(token);
+
+        Usuario usuario = usuarioRepo.findByCorreo(correo)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Cambiar contraseña
+        usuario.setContrasenia(encriptarPassword(nuevaContrasenia));
+        usuarioRepo.save(usuario);
+
+        // (Opcional) Enviar correo de confirmación
+        EmailDTO email = new EmailDTO(
+                "Confirmación de cambio de contraseña",
+                "Hola " + usuario.getNombre() + ",\n\nTu contraseña fue restablecida correctamente. Si no realizaste esta acción, por favor contacta al soporte de TANI.",
+                correo
+        );
+        emailServicio.enviarCorreo(email);
+    }
+
+
+
+    @Override
     public void cambiarContrasenia(String correo, String contrasenia) {
         // Buscar el usuario por correo
         Usuario usuario = usuarioRepo.findByCorreo(correo)
@@ -210,4 +261,3 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
 
 }
-

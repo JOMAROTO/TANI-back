@@ -42,24 +42,21 @@ public class AutenticacionController {
     @PostMapping("/recuperar-contrasenia")
     public ResponseEntity<Map<String, String>> recuperarContrasenia(@Valid @RequestBody Map<String, String> request) throws Exception {
         String correo = request.get("correo");
-        usuarioServicio.recuperarPassword(correo);
+        usuarioServicio.enviarCorreoRecuperacion(correo);
 
-        // Crear una respuesta en formato JSON
         Map<String, String> response = new HashMap<>();
-        response.put("mensaje", "Correo enviado exitosamente");
-
+        response.put("mensaje", "Se ha enviado un correo con instrucciones para restablecer tu contraseña.");
         return ResponseEntity.ok(response);
     }
 
 
-    @PutMapping("/cambiar-contrasenia/{correo}")
-    public ResponseEntity<Map<String, String>> cambiarContrasenia(@PathVariable String correo, @RequestBody String contrasenia) throws Exception {
-        usuarioServicio.cambiarContrasenia(correo, contrasenia);
+    @PutMapping("/restablecer-contrasenia")
+    public ResponseEntity<Map<String, String>> restablecerContrasenia(@RequestParam String token, @RequestBody Map<String, String> body) throws Exception {
+        String nuevaContrasenia = body.get("contrasenia");
+        usuarioServicio.restablecerContrasenia(token, nuevaContrasenia);
 
-        // Crear una respuesta en formato JSON
         Map<String, String> response = new HashMap<>();
-        response.put("mensaje", "Contraseña cambiada exitosamente");
-
+        response.put("mensaje", "La contraseña se ha restablecido exitosamente.");
         return ResponseEntity.ok(response);
     }
 
