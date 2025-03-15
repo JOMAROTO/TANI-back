@@ -1,9 +1,7 @@
 package tani.model.entities;
-
 import jakarta.persistence.*;
 import lombok.*;
 import tani.model.enums.TIPO_CALZADO;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,31 +14,21 @@ import java.util.List;
 public class Producto implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id_producto;
 
-    private int id_calzado;
-
     private String nombre;
+    private String descripcion;
 
     @Enumerated(EnumType.STRING)
     private TIPO_CALZADO tipoCalzado;
 
-    private String descripcion;
-
-    private String talla;
-
-    private int cantidad_displonible;
-
     private String imagen;
-
     private float precio;
 
-    @OneToOne(mappedBy="producto")
-    private Inventario inventario;
-
-    @OneToMany(mappedBy="producto")
-    private List<DetallePedido> detallePedidos;
+    @OneToMany(mappedBy = "producto")
+    private List<ProductoTalla> tallas;
 
 
 }

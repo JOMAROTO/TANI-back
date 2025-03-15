@@ -1,11 +1,6 @@
 package tani.model.entities;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.*;
-
+import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -17,19 +12,20 @@ import java.io.Serializable;
 public class DetallePedido implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id_detalle;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
     @ManyToOne
-    private Producto producto;
+    @JoinColumn(name = "producto_talla_id")
+    private ProductoTalla productoTalla;
 
     private int cantidad;
-
     private float precio_unitario;
-
     private float subtotal;
 
 }

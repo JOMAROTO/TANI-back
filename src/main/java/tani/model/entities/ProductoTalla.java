@@ -1,8 +1,7 @@
 package tani.model.entities;
-import lombok.*;
 import jakarta.persistence.*;
+import lombok.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -10,17 +9,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Notificacion implements Serializable {
+public class ProductoTalla implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private int id_notificacion;
+    private int id;
 
     @ManyToOne
-    @JoinColumn(name = "producto_talla_id")
-    private ProductoTalla productoTalla;
+    @JoinColumn(name = "producto_id")
+    private Producto producto;
 
-    private String mensaje;
-    private LocalDateTime fecha;
+    private String talla;
+    private int cantidad;
 }
