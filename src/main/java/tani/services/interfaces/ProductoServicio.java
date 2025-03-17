@@ -1,0 +1,15 @@
+package tani.services.interfaces;
+
+import tani.dto.producto.RegistroProductoDTO;
+import tani.dto.producto.InformacionProductoDTO;
+import tani.dto.producto.EditarProductoDTO;
+
+import java.util.List;
+
+public interface ProductoServicio {
+    InformacionProductoDTO crearProducto(RegistroProductoDTO productoDTO);
+    InformacionProductoDTO obtenerProductoPorId(int id);
+    List<InformacionProductoDTO> listarProductos();
+    InformacionProductoDTO editarProducto(EditarProductoDTO productoDTO);
+    void eliminarProducto(int id);
+}
