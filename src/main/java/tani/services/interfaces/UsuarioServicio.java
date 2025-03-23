@@ -15,7 +15,7 @@ public interface UsuarioServicio {
 
     Optional<InformacionUsuarioDTO> buscarPorCorreo(String correo) throws Exception;
 
-    TokenDTO iniciarSesion(LoginDTO usuarioDTO);
+    InformacionUsuarioDTO iniciarSesion(LoginDTO usuarioDTO);
 
     boolean existeCorreo(String correo);
 

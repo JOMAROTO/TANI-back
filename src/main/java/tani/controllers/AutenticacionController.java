@@ -1,6 +1,7 @@
 package tani.controllers;
 
 import org.springframework.http.HttpStatus;
+import tani.dto.usuario.InformacionUsuarioDTO;
 import tani.dto.usuario.RegistroUsuarioDTO;
 import tani.dto.usuario.LoginDTO;
 import tani.dto.otros.TokenDTO;
@@ -20,9 +21,9 @@ public class AutenticacionController {
     private final UsuarioServicio usuarioServicio;
 
     @PostMapping("/iniciar-sesion")
-    public ResponseEntity<TokenDTO> iniciarSesion(@Valid @RequestBody LoginDTO loginDTO) throws Exception {
-        TokenDTO tokenDTO = usuarioServicio.iniciarSesion(loginDTO);
-        return ResponseEntity.ok(tokenDTO);
+    public ResponseEntity<InformacionUsuarioDTO> iniciarSesion(@Valid @RequestBody LoginDTO loginDTO) {
+        InformacionUsuarioDTO usuarioDTO = usuarioServicio.iniciarSesion(loginDTO);
+        return ResponseEntity.ok(usuarioDTO);
     }
 
     @PostMapping("/crear-cuenta")

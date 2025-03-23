@@ -79,7 +79,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     }
 
     @Override
-    public TokenDTO iniciarSesion(LoginDTO usuarioDTO) {
+    public InformacionUsuarioDTO iniciarSesion(LoginDTO usuarioDTO) {
         // Buscar el usuario por correo
         Usuario usuario = usuarioRepo.findByCorreo(usuarioDTO.email())
                 .orElseThrow(() -> new RuntimeException("El correo no está registrado"));
@@ -90,17 +90,15 @@ public class UsuarioServicioImpl implements UsuarioServicio {
             throw new RuntimeException("La contraseña es incorrecta");
         }
 
-        // Construir claims para el JWT
-        Map<String, Object> claims = Map.of(
-                "tipoUsuario", usuario.getTipoUsuario(),
-                "nombre", usuario.getNombre(),
-                "idUsuario", usuario.getId_usuario()
+        // Crear y retornar el DTO de información del usuario
+        return new InformacionUsuarioDTO(
+                usuario.getId_usuario(),
+                usuario.getNombre(),
+                usuario.getFechaNacimiento(),
+                usuario.getTelefono(),
+                usuario.getCorreo(),
+                usuario.getTipoUsuario()
         );
-
-        // Generar el token con los claims
-        String token = jwtUtils.generarToken(usuario.getCorreo(), claims);
-
-        return new TokenDTO(token);
     }
 
 
