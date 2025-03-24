@@ -5,6 +5,7 @@ import org.simplejavamail.api.mailer.Mailer;
 import org.simplejavamail.api.mailer.config.TransportStrategy;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.MailerBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import tani.dto.otros.EmailDTO;
@@ -13,13 +14,19 @@ import tani.services.interfaces.EmailServicio;
 @Service
 public class EmailServicioImpl implements EmailServicio {
 
+    @Value("${spring.mail.username}")
+    private String emailUsername;
+
+    @Value("${spring.mail.password}")
+    private String emailPassword;
+
     @Override
     @Async
     public void enviarCorreo(EmailDTO emailDTO) throws Exception {
 
 
         Email email = EmailBuilder.startingBlank()
-                .from("AllVirtualTicket@gmail.com")
+                .from(emailUsername)
                 .to(emailDTO.getDestinatario())
                 .withSubject(emailDTO.getAsunto())
                 .withHTMLText(emailDTO.getCuerpo())
@@ -27,7 +34,7 @@ public class EmailServicioImpl implements EmailServicio {
 
 
         try (Mailer mailer = MailerBuilder
-                .withSMTPServer("smtp.gmail.com", 587, "allvirtualticket@gmail.com", "dtmu kgsd bsts vtby")
+                .withSMTPServer("smtp.gmail.com", 587, emailUsername, emailPassword)
                 .withTransportStrategy(TransportStrategy.SMTP_TLS)
                 .withDebugLogging(true)
                 .buildMailer()) {
