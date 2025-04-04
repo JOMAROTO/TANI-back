@@ -30,4 +30,11 @@ public class Pedido implements Serializable {
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<DetallePedido> detalles;
 
+    @Builder
+    public Pedido(Usuario usuario, LocalDateTime fecha_pedido, ESTADO estado, List<DetallePedido> detalles) {
+        this.usuario = usuario;
+        this.fecha_pedido = fecha_pedido;
+        this.estado = estado;
+        this.detalles = detalles;
+    }
 }

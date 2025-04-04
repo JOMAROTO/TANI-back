@@ -5,9 +5,9 @@ import java.io.Serializable;
 
 @Entity
 @Getter
-@Setter
+@Setter @Builder
 @NoArgsConstructor
-@ToString
+@ToString @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class DetallePedido implements Serializable {
 

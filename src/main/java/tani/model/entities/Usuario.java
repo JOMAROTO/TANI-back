@@ -25,6 +25,15 @@ public class Usuario implements Serializable{
     @Enumerated(EnumType.STRING)
     private TIPO_USUARIO tipoUsuario;
 
+    @Builder
+    public Usuario(String nombre, LocalDate fechaNacimiento, String telefono, String correo, String contrasenia, TIPO_USUARIO tipoUsuario) {
+        this.nombre = nombre;
+        this.fechaNacimiento = fechaNacimiento;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+        this.tipoUsuario = tipoUsuario;
+    }
 }
 
 

@@ -1,6 +1,8 @@
 package tani.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tani.model.entities.Producto;
 import tani.model.entities.ProductoTalla;
@@ -11,4 +13,7 @@ import java.util.List;
 public interface ProductoTallaRepo extends JpaRepository<ProductoTalla, Integer> {
     List<ProductoTalla> findByProducto(Producto producto);
     List<ProductoTalla> findByTalla(String talla);
+
+    @Query("SELECT pt FROM ProductoTalla pt WHERE pt.producto.id_producto = :idProducto")
+    List<ProductoTalla> buscarPorIdProducto(@Param("idProducto") Integer idProducto);
 }

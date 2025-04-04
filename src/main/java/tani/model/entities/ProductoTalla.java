@@ -22,4 +22,11 @@ public class ProductoTalla implements Serializable {
 
     private String talla;
     private int cantidad;
+
+    @Builder
+    public ProductoTalla(Producto producto, String talla, int cantidad) {
+        this.producto = producto;
+        this.talla = talla;
+        this.cantidad = cantidad;
+    }
 }

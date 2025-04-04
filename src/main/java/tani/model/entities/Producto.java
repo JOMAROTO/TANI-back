@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import tani.model.enums.TIPO_CALZADO;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,8 +28,21 @@ public class Producto implements Serializable {
     private String imagen;
     private float precio;
 
-    @OneToMany(mappedBy = "producto")
-    private List<ProductoTalla> tallas;
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductoTalla> tallas = new ArrayList<>();
 
+    public void addTalla(ProductoTalla talla){
+        tallas.add(talla);
+        talla.setProducto(this);
+    }
 
+    @Builder
+    public Producto(String nombre, String descripcion, TIPO_CALZADO tipoCalzado, String imagen, float precio, List<ProductoTalla> tallas) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.tipoCalzado = tipoCalzado;
+        this.imagen = imagen;
+        this.precio = precio;
+        this.tallas = tallas;
+    }
 }
