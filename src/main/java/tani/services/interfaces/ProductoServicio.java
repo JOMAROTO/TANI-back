@@ -3,6 +3,7 @@ package tani.services.interfaces;
 import tani.dto.producto.RegistroProductoDTO;
 import tani.dto.producto.InformacionProductoDTO;
 import tani.dto.producto.EditarProductoDTO;
+import tani.dto.productotalla.RegistroProductoTallaDTO;
 
 import java.util.List;
 

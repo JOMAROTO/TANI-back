@@ -13,4 +13,6 @@ public interface ProductoTallaServicio {
     List<InformacionProductoTallaDTO> listarProductoTallas(int productoId);
     InformacionProductoTallaDTO editarProductoTalla(EditarProductoTallaDTO productoTallaDTO);
     void eliminarProductoTalla(int id);
+    List<RegistroProductoTallaDTO> obtenerTallasPorProductoId(int productoId);
+
 }

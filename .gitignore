@@ -43,3 +43,6 @@ bin/
 
 ##MYSQL CONECTION
 src/main/resources/application.properties
+
+# Firebase credentials
+src/main/resources/*.json

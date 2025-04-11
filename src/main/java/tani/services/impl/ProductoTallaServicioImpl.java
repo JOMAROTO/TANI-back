@@ -79,6 +79,17 @@ public class ProductoTallaServicioImpl implements ProductoTallaServicio {
     }
 
     @Override
+    public List<RegistroProductoTallaDTO> obtenerTallasPorProductoId(int productoId) {
+        return productoTallaRepo.buscarPorIdProducto(productoId).stream()
+                .map(talla -> new RegistroProductoTallaDTO(
+                        productoId,
+                        talla.getTalla(),
+                        talla.getCantidad()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void eliminarProductoTalla(int id) {
         productoTallaRepo.deleteById(id);
     }
