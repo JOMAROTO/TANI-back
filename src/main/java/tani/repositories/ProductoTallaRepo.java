@@ -14,6 +14,4 @@ public interface ProductoTallaRepo extends JpaRepository<ProductoTalla, Integer>
     List<ProductoTalla> findByProducto(Producto producto);
     List<ProductoTalla> findByTalla(String talla);
 
-    @Query("SELECT pt FROM ProductoTalla pt WHERE pt.producto.id_producto = :idProducto")
-    List<ProductoTalla> buscarPorIdProducto(@Param("idProducto") Integer idProducto);
 }

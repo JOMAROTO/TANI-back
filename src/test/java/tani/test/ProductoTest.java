@@ -25,38 +25,41 @@ public class ProductoTest {
     private ProductoTallaRepo productoTallaRepo;
 
     @Test
-    public void registrarTest(){
+    public void registrarTest() {
+        // Crear el producto
         Producto producto = Producto.builder()
                 .nombre("Calzado Deportivo")
                 .descripcion("Ideales para hacer deporte.")
                 .tipoCalzado(TIPO_CALZADO.TENIS)
                 .imagen("running.png")
                 .precio(200.99f)
-                .tallas(new ArrayList<>())
                 .build();
 
-        List<ProductoTalla> tallas = new ArrayList<>();
-        tallas.add(
-                ProductoTalla.builder()
-                        .talla("38")
-                        .cantidad(10)
-                        .producto(producto)
-                        .build()
-        );
-        tallas.add(
-                ProductoTalla.builder()
-                        .talla("40")
-                        .cantidad(5)
-                        .producto(producto)
-                        .build()
-        );
+        // Guardar el producto en la base de datos
+        Producto productoCreado = productoRepo.save(producto);
+        assertNotNull(productoCreado, "El producto no fue creado correctamente");
 
-        producto.setTallas(tallas);
+        // Crear las tallas asociadas al producto
+        ProductoTalla talla1 = ProductoTalla.builder()
+                .talla("38")
+                .cantidad(10)
+                .producto(productoCreado) // Relacionar con el producto creado
+                .build();
 
-        Producto productoCreado= productoRepo.save(producto);
-        assertNotNull(productoCreado);
-        assertEquals(2, productoCreado.getTallas().size());
-        assertEquals("38", productoCreado.getTallas().get(0).getTalla());
+        ProductoTalla talla2 = ProductoTalla.builder()
+                .talla("40")
+                .cantidad(5)
+                .producto(productoCreado) // Relacionar con el producto creado
+                .build();
+
+        // Guardar las tallas en la base de datos
+        productoTallaRepo.save(talla1);
+        productoTallaRepo.save(talla2);
+
+        // Verificar que las tallas se guardaron correctamente
+        List<ProductoTalla> tallasGuardadas = productoTallaRepo.findByProducto(productoCreado);
+        assertEquals(2, tallasGuardadas.size(), "El número de tallas guardadas no es correcto");
+        assertEquals("38", tallasGuardadas.get(0).getTalla(), "La talla guardada no es correcta");
     }
 
     @Test
@@ -102,15 +105,19 @@ public class ProductoTest {
     }
 
     @Test
-    public void eliminarTest(){
+    public void eliminarTest() {
         int idExistente = 14;
         Producto producto = productoRepo.findById(idExistente)
                 .orElseThrow(() -> new AssertionError("El producto no existe en la base de datos"));
+
+
+        // Eliminar el producto
         productoRepo.deleteById(idExistente);
 
+        // Verificar que el producto fue eliminado
         assertFalse(productoRepo.existsById(idExistente), "El producto no fue eliminado");
 
-        List<ProductoTalla> tallas = productoTallaRepo.buscarPorIdProducto(idExistente);
-        assertTrue(tallas.isEmpty(), "Las tallas asociadas no se eliminaron");
+        // Verificar que las tallas asociadas también fueron eliminadas
+        assertTrue(producto.getTallas().isEmpty(), "Las tallas asociadas no se eliminaron");
     }
 }

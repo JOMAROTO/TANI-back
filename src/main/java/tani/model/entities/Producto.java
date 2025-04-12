@@ -31,10 +31,6 @@ public class Producto implements Serializable {
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductoTalla> tallas = new ArrayList<>();
 
-    public void addTalla(ProductoTalla talla){
-        tallas.add(talla);
-        talla.setProducto(this);
-    }
 
     @Builder
     public Producto(String nombre, String descripcion, TIPO_CALZADO tipoCalzado, String imagen, float precio, List<ProductoTalla> tallas) {

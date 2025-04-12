@@ -80,7 +80,10 @@ public class ProductoTallaServicioImpl implements ProductoTallaServicio {
 
     @Override
     public List<RegistroProductoTallaDTO> obtenerTallasPorProductoId(int productoId) {
-        return productoTallaRepo.buscarPorIdProducto(productoId).stream()
+        Producto producto = productoRepo.findById(productoId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        return producto.getTallas().stream()
                 .map(talla -> new RegistroProductoTallaDTO(
                         productoId,
                         talla.getTalla(),
