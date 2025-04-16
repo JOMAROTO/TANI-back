@@ -86,6 +86,7 @@ public class ProductoTallaServicioImpl implements ProductoTallaServicio {
         return producto.getTallas().stream()
                 .map(talla -> new RegistroProductoTallaDTO(
                         productoId,
+                        talla.getId(),
                         talla.getTalla(),
                         talla.getCantidad()
                 ))

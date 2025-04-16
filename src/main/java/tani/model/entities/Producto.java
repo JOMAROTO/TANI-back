@@ -20,7 +20,10 @@ public class Producto implements Serializable {
     private int id_producto;
 
     private String nombre;
+
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
+
 
     @Enumerated(EnumType.STRING)
     private TIPO_CALZADO tipoCalzado;

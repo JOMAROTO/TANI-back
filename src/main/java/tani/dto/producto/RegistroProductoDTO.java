@@ -12,3 +12,4 @@ public record RegistroProductoDTO(
         @NotNull float precio
 ) {
 }
+
