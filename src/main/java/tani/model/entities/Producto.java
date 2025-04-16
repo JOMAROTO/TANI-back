@@ -21,7 +21,6 @@ public class Producto implements Serializable {
 
     private String nombre;
 
-    @Column(columnDefinition = "TEXT")
     private String descripcion;
 
 
