@@ -72,6 +72,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     }
 
 
+
     private String encriptarPassword(String password){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode( password );
