@@ -12,5 +12,5 @@ public interface ProductoServicio {
     InformacionProductoDTO obtenerProductoPorId(int id);
     List<InformacionProductoDTO> listarProductos();
     InformacionProductoDTO editarProducto(RegistroProductoDTO productoDTO, String productoNombre);
-    void eliminarProducto(int id);
+    void eliminarProductoPorNombre(String nombreProducto);
 }

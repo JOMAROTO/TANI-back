@@ -105,6 +105,14 @@ public class ProductoController {
     }
 
 
+    @DeleteMapping("/eliminar-producto")
+    public ResponseEntity<Map<String, String>> eliminarProducto(@RequestParam String nombre) {
+        System.out.println("producto a eliminar:" + nombre);
+        productoServicio.eliminarProductoPorNombre(nombre);
 
+        Map<String, String> response = new HashMap<>();
+        response.put("mensaje", "Producto eliminado exitosamente");
+        return ResponseEntity.ok(response);
+    }
 
 }

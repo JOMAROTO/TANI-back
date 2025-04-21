@@ -7,7 +7,9 @@ import tani.dto.producto.RegistroProductoDTO;
 import tani.dto.producto.InformacionProductoDTO;
 import tani.dto.producto.EditarProductoDTO;
 import tani.model.entities.Producto;
+import tani.model.entities.ProductoTalla;
 import tani.repositories.ProductoRepo;
+import tani.repositories.ProductoTallaRepo;
 import tani.services.interfaces.ProductoServicio;
 
 import java.util.List;
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
 public class ProductoServicioImpl implements ProductoServicio {
 
     private final ProductoRepo productoRepo;
+
+    private final ProductoTallaRepo productoTallaRepo;
 
     @Override
     public InformacionProductoDTO crearProducto(RegistroProductoDTO productoDTO) {
@@ -100,7 +104,16 @@ public class ProductoServicioImpl implements ProductoServicio {
     }
 
     @Override
-    public void eliminarProducto(int id) {
-        productoRepo.deleteById(id);
+    public void eliminarProductoPorNombre(String nombreProducto) {
+        // Buscar el producto por nombre
+        Producto producto = productoRepo.findByNombre(nombreProducto)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        // Eliminar las tallas asociadas al producto
+        List<ProductoTalla> tallas = productoTallaRepo.findByProducto(producto);
+        productoTallaRepo.deleteAll(tallas);
+
+        // Eliminar el producto
+        productoRepo.delete(producto);
     }
 }
