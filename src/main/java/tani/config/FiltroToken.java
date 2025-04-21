@@ -30,7 +30,7 @@ public class FiltroToken extends OncePerRequestFilter {
             FilterChain filterChain) throws ServletException, IOException {
 
         // Configuración de cabeceras para CORS
-        response.addHeader("Access-Control-Allow-Origin", "https://tani-front-543899402004.us-central1.run.app"); // Permitir solo tu frontend
+        response.addHeader("Access-Control-Allow-Origin", "https://tani-front-543899402004.us-central1.run.app");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.addHeader("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization");
         response.addHeader("Access-Control-Allow-Credentials", "true");
