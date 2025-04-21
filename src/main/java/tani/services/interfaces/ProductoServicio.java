@@ -11,6 +11,6 @@ public interface ProductoServicio {
     InformacionProductoDTO crearProducto(RegistroProductoDTO productoDTO);
     InformacionProductoDTO obtenerProductoPorId(int id);
     List<InformacionProductoDTO> listarProductos();
-    InformacionProductoDTO editarProducto(EditarProductoDTO productoDTO);
+    InformacionProductoDTO editarProducto(RegistroProductoDTO productoDTO, String productoNombre);
     void eliminarProducto(int id);
 }

@@ -80,13 +80,13 @@ public class ProductoServicioImpl implements ProductoServicio {
     }
 
     @Override
-    public InformacionProductoDTO editarProducto(EditarProductoDTO productoDTO) {
-        Producto producto = productoRepo.findById(productoDTO.idProducto())
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+    public InformacionProductoDTO editarProducto(RegistroProductoDTO productoDTO, String productoNombre) {
+        Producto producto = productoRepo.findByNombre(productoNombre)
+                .orElseThrow(() -> new RuntimeException("Producto nombre no encontrado"));
         producto.setNombre(productoDTO.nombre());
         producto.setDescripcion(productoDTO.descripcion());
         producto.setTipoCalzado(productoDTO.tipoCalzado());
-        producto.setImagen(productoDTO.imagen());
+        producto.setImagen(producto.getImagen()); // Mantener la imagen actual
         producto.setPrecio(productoDTO.precio());
         Producto productoActualizado = productoRepo.save(producto);
         return new InformacionProductoDTO(

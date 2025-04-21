@@ -11,8 +11,7 @@ public interface ProductoTallaServicio {
     void crearProductoTallas(List<RegistroProductoTallaDTO> tallas, InformacionProductoDTO productoDTO);
     InformacionProductoTallaDTO obtenerProductoTallaPorId(int id);
     List<InformacionProductoTallaDTO> listarProductoTallas(int productoId);
-    InformacionProductoTallaDTO editarProductoTalla(EditarProductoTallaDTO productoTallaDTO);
+    void editarProductoTalla(List<RegistroProductoTallaDTO> tallas, InformacionProductoDTO productoDTO);
     void eliminarProductoTalla(int id);
     List<RegistroProductoTallaDTO> obtenerTallasPorProductoId(int productoId);
-
 }

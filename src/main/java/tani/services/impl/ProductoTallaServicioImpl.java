@@ -64,18 +64,31 @@ public class ProductoTallaServicioImpl implements ProductoTallaServicio {
     }
 
     @Override
-    public InformacionProductoTallaDTO editarProductoTalla(EditarProductoTallaDTO productoTallaDTO) {
-        ProductoTalla productoTalla = productoTallaRepo.findById(productoTallaDTO.id())
-                .orElseThrow(() -> new RuntimeException("ProductoTalla no encontrado"));
-        productoTalla.setTalla(productoTallaDTO.talla());
-        productoTalla.setCantidad(productoTallaDTO.cantidad());
-        ProductoTalla productoTallaActualizado = productoTallaRepo.save(productoTalla);
-        return new InformacionProductoTallaDTO(
-                productoTallaActualizado.getId(),
-                productoTallaActualizado.getProducto().getId_producto(),
-                productoTallaActualizado.getTalla(),
-                productoTallaActualizado.getCantidad()
-        );
+    public void editarProductoTalla(List<RegistroProductoTallaDTO> tallasNuevas, InformacionProductoDTO productoDTO) {
+        Producto producto = productoRepo.findById(productoDTO.idProducto())
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        List<ProductoTalla> productoTallasAnterior = productoTallaRepo.findByProducto(producto);
+
+        for (RegistroProductoTallaDTO tallaNueva : tallasNuevas) {
+            ProductoTalla productoTallaExistente = productoTallasAnterior.stream()
+                    .filter(tallaAnterior -> tallaAnterior.getTalla().equals(tallaNueva.talla()))
+                    .findFirst()
+                    .orElse(null);
+
+            if (productoTallaExistente != null) {
+                // Editar la cantidad de la talla existente
+                productoTallaExistente.setCantidad(tallaNueva.cantidad());
+                productoTallaRepo.save(productoTallaExistente);
+            } else {
+                // Crear una nueva talla si no existe
+                ProductoTalla nuevaTalla = new ProductoTalla();
+                nuevaTalla.setProducto(producto);
+                nuevaTalla.setTalla(tallaNueva.talla());
+                nuevaTalla.setCantidad(tallaNueva.cantidad());
+                productoTallaRepo.save(nuevaTalla);
+            }
+        }
     }
 
     @Override

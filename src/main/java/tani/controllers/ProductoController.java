@@ -9,6 +9,7 @@ import tani.dto.producto.ProductoConTallasDTO;
 import tani.dto.producto.RegistroProductoDTO;
 import tani.dto.producto.InformacionProductoDTO;
 import tani.dto.productotalla.RegistroProductoTallaDTO;
+import tani.model.entities.Producto;
 import tani.services.interfaces.ImagenesServicio;
 import tani.services.interfaces.ProductoServicio;
 import tani.services.interfaces.ProductoTallaServicio;
@@ -83,6 +84,24 @@ public class ProductoController {
                 .toList();
 
         return ResponseEntity.ok(respuesta);
+    }
+
+    @PutMapping(value = "/editar-producto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Map<String, String>> editarProducto(
+            @RequestPart("productoNombre") String productoNombre,
+            @RequestPart("productoConTallasDTO") ProductoConTallasDTO productoConTallasDTO) {
+
+        // Actualizar los datos del producto
+        RegistroProductoDTO original = productoConTallasDTO.getRegistroProductoDTO();
+        InformacionProductoDTO nuevo = productoServicio.editarProducto(original, productoNombre);
+
+        // Actualizar las tallas asociadas
+        productoTallaServicio.editarProductoTalla(productoConTallasDTO.getTallas(), nuevo);
+
+        // Respuesta
+        Map<String, String> response = new HashMap<>();
+        response.put("mensaje", "Producto editado exitosamente");
+        return ResponseEntity.ok(response);
     }
 
 
